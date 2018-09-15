@@ -386,6 +386,7 @@ MonoBehaviour:
   pilotData: {fileID: 1497660811}
   aircraftOverlayPrefab: {fileID: 1732133999532780, guid: 598e4822346f17844ad8b5eae262c4aa,
     type: 2}
+  distanceThreshold: 20000
 --- !u!1 &1164778210
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,21 +558,6 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 224649016440789312, guid: 598e4822346f17844ad8b5eae262c4aa,
-        type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.20816989
-      objectReference: {fileID: 0}
-    - target: {fileID: 224649016440789312, guid: 598e4822346f17844ad8b5eae262c4aa,
-        type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.20816985
-      objectReference: {fileID: 0}
-    - target: {fileID: 224649016440789312, guid: 598e4822346f17844ad8b5eae262c4aa,
-        type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.20816985
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 598e4822346f17844ad8b5eae262c4aa, type: 2}
   m_IsPrefabParent: 0
@@ -615,9 +601,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd463168e2215145bde87e7cf946be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  longtitude: 7.71295
-  lantitude: 47.0128
-  altitude: 300
+  longtitude: 8.542831
+  lantitude: 47.45883
+  altitude: 200
 --- !u!1 &1931759237
 GameObject:
   m_ObjectHideFlags: 0
