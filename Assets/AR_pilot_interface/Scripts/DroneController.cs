@@ -7,7 +7,8 @@ using UnityStandardAssets.CrossPlatformInput;
 public class DroneController : MonoBehaviour {
 
 
-	public float pilotControlSpeed = 8.0f;
+	public float pilotControlSpeed;
+	public float rotationSpeed;
 
 	public bool overriddenControl;
 
@@ -18,18 +19,22 @@ public class DroneController : MonoBehaviour {
 
 	public AirTrafficRenderer airTrafficRenderer;
 
+	public GameObject collisionText;
+
 	public float criticalDistance = 10000.0f;
 
-	bool collisionDetection(){
-		foreach (var item in distances) {
+	bool collisionDetection(List<float> new_distances){
+		foreach (var item in new_distances) {
 			//float dist = System.Math.Abs(Vector3.Distance (item.transform.position, this.GetComponent<RectTransform>().position));
 			if (item < criticalDistance) {
+			//	Debug.Log ("Collision dist: " + item);
 				this.GetComponentInChildren<Image> ().color = Color.yellow;
-				Debug.Log ("Collision!");
+				collisionText.SetActive (true);
 				return true;
 			}
 		}
 		this.GetComponentInChildren<Image> ().color = Color.blue;
+		collisionText.SetActive (false);
 		return false;
 	}
 
@@ -47,30 +52,37 @@ public class DroneController : MonoBehaviour {
 		drone.speed = 0.0f;
 		drone.last_update = "2018-09-14T22:42:25.898475+00:00";
 		drone.heading = 0.0f;
-
+			
 		return JsonUtility.ToJson (drone);
 
 	}
 
 	void pilotControl(){
-		Vector3 pos = this.transform.position;
+		Vector3 pos = this.transform.localPosition;
+		Quaternion rot = this.transform.localRotation;
+		Vector3 angles = rot.eulerAngles;
 		float multiplier = 1.0f;
-		if (CrossPlatformInputManager.GetAxis ("Horizontal") == 0.0f && CrossPlatformInputManager.GetAxis ("Vertical") == 0.0f)
-			multiplier = 1.0f / Mathf.Sqrt (2);
+//		if (CrossPlatformInputManager.GetAxis ("Horizontal") == 0.0f && CrossPlatformInputManager.GetAxis ("Vertical") == 0.0f)
+//			multiplier = 1.0f / Mathf.Sqrt (2);
 		if (CrossPlatformInputManager.GetAxis ("Horizontal") < 0) {
-			pos.x -= multiplier*pilotControlSpeed;
-		}
+			angles.y -= multiplier * rotationSpeed;
+		}	
 		if (CrossPlatformInputManager.GetAxis ("Horizontal") > 0) {
-			pos.x += multiplier*pilotControlSpeed;
+			angles.y += multiplier * rotationSpeed;
 		}
 		if (CrossPlatformInputManager.GetAxis ("Vertical") < 0) {
-			pos.z -= multiplier*pilotControlSpeed;
+			//this.transform.position -= this.transform.forward * pilotControlSpeed;
+			this.transform.Translate(Vector3.forward * Time.deltaTime*pilotControlSpeed);
 		}
 		if (CrossPlatformInputManager.GetAxis ("Vertical") > 0) {
-			pos.z += multiplier*pilotControlSpeed;
+			this.transform.position += this.transform.forward * pilotControlSpeed;
+			this.transform.Translate(-Vector3.forward * Time.deltaTime*pilotControlSpeed);
 		}
-		pos.y += CrossPlatformInputManager.GetAxis ("Lift")*0.06f;
-		this.transform.position = pos;
+	//	pos.y += CrossPlatformInputManager.GetAxis ("Lift")*0.06f;
+		this.transform.Translate(Vector3.up*Time.deltaTime*CrossPlatformInputManager.GetAxis("Lift")*1.2f);
+		//this.transform.localPosition = pos;
+		rot.eulerAngles = angles;
+		this.transform.localRotation = rot;
 	}
 
 	// Update is called once per frame
@@ -78,7 +90,7 @@ public class DroneController : MonoBehaviour {
 		// Update airplane data
 	//	overlays = new List<GameObject>(airTrafficRenderer.aircraftOverlays);
 		distances = new List<float>(airTrafficRenderer.distances);	
-		overriddenControl = collisionDetection ();
+		overriddenControl = collisionDetection (distances);
 		if (!overriddenControl)
 			pilotControl ();
 		else

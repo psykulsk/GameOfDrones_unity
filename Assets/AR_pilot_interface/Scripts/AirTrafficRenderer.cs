@@ -25,6 +25,8 @@ public class AirTrafficRenderer : MonoBehaviour {
 	// destroy old overlays
 		foreach (var item in aircraftOverlays) {
 			Destroy (item.gameObject);
+			distances.Clear ();
+			filteredAircrafts.Clear ();
 		}
 		foreach (var aircraft in aircrafts) {
 			float xDiff = helperFunctions.latitudeToMeters (aircraft.lat - pilotData.lantitude, pilotData.lantitude);
