@@ -25,11 +25,22 @@ public static class ServerQuery {
 		}
 	}
 
-//	public static IEnumerator postDronePosition(string drone_data_json){
-//		byte[] bytes = Encoding.UTF8.GetBytes(drone_data_json);
-//		UnityWebRequest www = UnityWebRequest.Put (droneDataEndpoint, bytes);
-//		www.SetRequestHeader("X-HTTP-Method-Override", "POST");
-//		www.SetRequestHeader ("Content-Type", "application/json");
-//	}
+	public static IEnumerator postDronePosition(System.Func<string> callback){
+		string drone_data_json = callback ();	
+		Debug.Log (drone_data_json);
+		byte[] bytes = Encoding.UTF8.GetBytes(drone_data_json);
+		UnityWebRequest www = new UnityWebRequest (droneDataEndpoint, UnityWebRequest.kHttpVerbPOST);
+		UploadHandlerRaw uploadHandler = new UploadHandlerRaw (bytes);
+		www.uploadHandler = uploadHandler;
+		www.SetRequestHeader ("Content-Type", "application/json");
+
+		yield return www.SendWebRequest();
+
+		if (www.isNetworkError || www.isHttpError) {
+			Debug.Log (www.error);
+		}
+		else {
+		}
+	}
 
 }

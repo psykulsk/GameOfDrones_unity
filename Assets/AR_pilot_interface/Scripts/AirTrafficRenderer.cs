@@ -24,14 +24,14 @@ public class AirTrafficRenderer : MonoBehaviour {
 			Destroy (item.gameObject);
 		}
 		foreach (var aircraft in aircrafts) {
-			float yDiff = helperFunctions.latitudeToMeters (aircraft.lat - pilotData.lantitude, pilotData.lantitude);
-			float xDiff = helperFunctions.longtitudeToMeters (aircraft.lon - pilotData.longtitude, pilotData.lantitude);
+			float xDiff = helperFunctions.latitudeToMeters (aircraft.lat - pilotData.lantitude, pilotData.lantitude);
+			float zDiff = helperFunctions.longtitudeToMeters (aircraft.lon - pilotData.longtitude, pilotData.lantitude);
 			float heightDiff = aircraft.alt - pilotData.altitude;
-			float distance = Mathf.Sqrt ((float)(yDiff * yDiff + xDiff * xDiff));
+			float distance = Mathf.Sqrt ((float)(zDiff * zDiff + xDiff * xDiff));
 			if (distance < distanceThreshold) {
 				float scale = distance / 6000.0f;
 				GameObject newOverlay = (GameObject)Instantiate (aircraftOverlayPrefab, this.gameObject.transform); 
-				newOverlay.GetComponent<RectTransform> ().localPosition = new Vector3 (yDiff, heightDiff, xDiff); 
+				newOverlay.GetComponent<RectTransform> ().localPosition = new Vector3 (xDiff, heightDiff, zDiff); 
 				newOverlay.GetComponent<RectTransform> ().localScale = new Vector3 (scale, scale);
 				aircraftOverlays.Add (newOverlay);
 				newOverlay.GetComponent<OverlayController> ().setAircraftData (aircraft);

@@ -743,7 +743,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
   m_AnchorMin: {x: 0.88873696, y: 0.03}
   m_AnchorMax: {x: 0.98, y: 0.13000001}
-  m_AnchoredPosition: {x: -2, y: 1.0000153}
+  m_AnchoredPosition: {x: -2, y: 1.0000305}
   m_SizeDelta: {x: -30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &302208092
@@ -1027,8 +1027,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1be6bc7a4caed64a96f4fdf115b7944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentjson: 
   airTrafficRenderer: {fileID: 568665127}
+  currentDroneJson: 
+  droneController: {fileID: 1149342675}
 --- !u!4 &414423631
 Transform:
   m_ObjectHideFlags: 0
@@ -1384,6 +1385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pilotControlSpeed: 0.01
   overriddenControl: 0
+  pilotData: {fileID: 1497660811}
 --- !u!54 &1149342678
 Rigidbody:
   m_ObjectHideFlags: 0

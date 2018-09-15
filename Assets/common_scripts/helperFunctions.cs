@@ -27,4 +27,14 @@ public static class helperFunctions {
 		float longtitudeDegreeLengthMeteres = (float)(111412.84f * Math.Cos (currentLatitude) - 93.5f * Math.Cos (3.0f * currentLatitude) + 0.118f * Math.Cos (5.0f * currentLatitude));
 		return longtitudeDegreeLengthMeteres * longtitudeDiff;
 	}
+
+	public static float metersToLongtitude(float meters, float currentLatitude){
+		float longtitudeDegreeLengthMeteres = (float)(111412.84f * Math.Cos (currentLatitude) - 93.5f * Math.Cos (3.0f * currentLatitude) + 0.118f * Math.Cos (5.0f * currentLatitude));
+		return meters/longtitudeDegreeLengthMeteres;
+	}
+
+	public static float metersToLatitude(float meters, float currentLatitude){
+		float latitudeDegreeLengthMeters = (float)(111132.92f - 559.82f * Math.Cos (2.0f * currentLatitude) + 1.175f * Math.Cos (4.0f * currentLatitude) - 0.0023f * Math.Cos (6.0f * currentLatitude));
+		return meters/latitudeDegreeLengthMeters;
+	}
 }
