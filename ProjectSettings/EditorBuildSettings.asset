@@ -11,3 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/AR_pilot_interface/ar_test_scene.unity
     guid: f22f59ab7143a2a4badb7b21735a4906
+  - enabled: 0
+    path: Assets/ProfessionalAssets/DronePack_Free/Scenes/DronePlayground [Mobile].unity
+    guid: b5979b5457c47c64ba4599d83183fbc7

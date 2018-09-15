@@ -16,7 +16,7 @@ public static class ServerQuery {
 		}
 		else {
 
-			Debug.Log(www.downloadHandler.text);
+		//	Debug.Log(www.downloadHandler.text);
 
 			callback(www.downloadHandler.text);
 		}

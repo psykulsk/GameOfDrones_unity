@@ -14,7 +14,7 @@ public class GameStateController : MonoBehaviour {
 
 	void updateAirTrafficData(){
 		StartCoroutine (ServerQuery.getAirTrafficJson ((newJson) => {
-			Debug.Log("new json: " + newJson);
+		//	Debug.Log("new json: " + newJson);
 			airTrafficRenderer.renderNewOverlaysFromJson(newJson);
 		}));
 	}
