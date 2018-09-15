@@ -8,6 +8,8 @@ public class AirTrafficRenderer : MonoBehaviour {
 
 	public Aircraft[] aircrafts;
 
+	public List<GameObject> aircraftOverlays;
+
 	public Dictionary<string, GameObject> aircraftsAndObjects;
 
 	public PilotData pilotData;
@@ -15,6 +17,10 @@ public class AirTrafficRenderer : MonoBehaviour {
 	public GameObject aircraftOverlayPrefab;
 
 	private void drawAircraftOverlays(){
+	// destroy old overlays
+		foreach (var item in aircraftOverlays) {
+			Destroy (item.gameObject);
+		}
 		foreach (var aircraft in aircrafts) {
 			float yDiff = helperFunctions.latitudeToMeters (aircraft.lat - pilotData.lantitude, pilotData.lantitude);
 			float xDiff = helperFunctions.longtitudeToMeters (aircraft.lon - pilotData.longtitude, pilotData.lantitude);
@@ -24,16 +30,18 @@ public class AirTrafficRenderer : MonoBehaviour {
 			GameObject newOverlay = (GameObject)Instantiate (aircraftOverlayPrefab, this.gameObject.transform); 
 			newOverlay.GetComponent<RectTransform> ().localPosition = new Vector3 (yDiff, heightDiff, xDiff); 
 			newOverlay.GetComponent<RectTransform> ().localScale = new Vector3 (scale, scale);
+			aircraftOverlays.Add (newOverlay);
 		}
 	}
 
 	// Use this for initialization
 	void Start () {
-		aircrafts = AirTrafficParser.parseAirTrafficJSON (testData);
-		drawAircraftOverlays ();
 	}
 
-
+	public void renderNewOverlaysFromJson(string json){
+		aircrafts = AirTrafficParser.parseAirTrafficJSON (json);
+		drawAircraftOverlays ();
+	}
 
 	// Update is called once per frame
 	void Update () {
