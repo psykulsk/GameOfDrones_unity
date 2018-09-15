@@ -20,8 +20,10 @@ public class AirTrafficRenderer : MonoBehaviour {
 			float xDiff = helperFunctions.longtitudeToMeters (aircraft.lon - pilotData.longtitude, pilotData.lantitude);
 			float heightDiff = aircraft.alt - pilotData.altitude;
 			float distance = Mathf.Sqrt ((float)(yDiff * yDiff + xDiff * xDiff + heightDiff*heightDiff));
+			float scale = distance / 3000.0f;
 			GameObject newOverlay = (GameObject)Instantiate (aircraftOverlayPrefab, this.gameObject.transform); 
-			newOverlay.GetComponent<RectTransform> ().localPosition = new Vector3 (yDiff, xDiff, heightDiff); 
+			newOverlay.GetComponent<RectTransform> ().localPosition = new Vector3 (yDiff, heightDiff, xDiff); 
+			newOverlay.GetComponent<RectTransform> ().localScale = new Vector3 (scale, scale);
 		}
 	}
 

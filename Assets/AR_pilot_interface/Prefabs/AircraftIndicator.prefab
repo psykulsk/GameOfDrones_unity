@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 223068236002354136}
   - component: {fileID: 114517087543952358}
   - component: {fileID: 114592660662739874}
+  - component: {fileID: 114129404747534796}
   m_Layer: 5
   m_Name: AircraftIndicator
   m_TagString: Untagged
@@ -46,6 +47,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114129404747534796
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1732133999532780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe9fa5528d187b8459702172f2594921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114431854714524702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,8 +155,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1732133999532780}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 369}
+  m_LocalScale: {x: 0.3329934, y: 0.3329934, z: 0.3329934}
   m_Children:
   - {fileID: 224742848143856682}
   m_Father: {fileID: 0}
@@ -152,7 +164,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 150.9}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224742848143856682
