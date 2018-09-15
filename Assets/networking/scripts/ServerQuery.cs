@@ -2,10 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
+using UnityEngine;
+using System.Text;
 
 public static class ServerQuery {
 
 	public static string airTrafficEndpoint = "http://godbackend.scapp.io/mirror_recorded";
+	public static string droneDataEndpoint = "http://godbackend.scapp.io/post_drone_position";
 
 	public static IEnumerator getAirTrafficJson(System.Action<string> callback) {
 		UnityWebRequest www = UnityWebRequest.Get(airTrafficEndpoint);
@@ -21,5 +24,12 @@ public static class ServerQuery {
 			callback(www.downloadHandler.text);
 		}
 	}
+
+//	public static IEnumerator postDronePosition(string drone_data_json){
+//		byte[] bytes = Encoding.UTF8.GetBytes(drone_data_json);
+//		UnityWebRequest www = UnityWebRequest.Put (droneDataEndpoint, bytes);
+//		www.SetRequestHeader("X-HTTP-Method-Override", "POST");
+//		www.SetRequestHeader ("Content-Type", "application/json");
+//	}
 
 }

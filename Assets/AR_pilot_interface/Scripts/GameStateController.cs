@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameStateController : MonoBehaviour {
 
-	public string currentjson;
 	public AirTrafficRenderer airTrafficRenderer;
 
 	// Use this for initialization
