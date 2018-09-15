@@ -13,8 +13,23 @@ public class DroneController : MonoBehaviour {
 
 	public PilotData pilotData;
 
+	public List<GameObject> overlays;
+	public List<float> distances;
+
+	public AirTrafficRenderer airTrafficRenderer;
+
+	public float criticalDistance = 10000.0f;
 
 	bool collisionDetection(){
+		foreach (var item in distances) {
+			//float dist = System.Math.Abs(Vector3.Distance (item.transform.position, this.GetComponent<RectTransform>().position));
+			if (item < criticalDistance) {
+				this.GetComponentInChildren<Image> ().color = Color.yellow;
+				Debug.Log ("Collision!");
+				return true;
+			}
+		}
+		this.GetComponentInChildren<Image> ().color = Color.blue;
 		return false;
 	}
 
@@ -39,17 +54,20 @@ public class DroneController : MonoBehaviour {
 
 	void pilotControl(){
 		Vector3 pos = this.transform.position;
+		float multiplier = 1.0f;
+		if (CrossPlatformInputManager.GetAxis ("Horizontal") == 0.0f && CrossPlatformInputManager.GetAxis ("Vertical") == 0.0f)
+			multiplier = 1.0f / Mathf.Sqrt (2);
 		if (CrossPlatformInputManager.GetAxis ("Horizontal") < 0) {
-			pos.x -= pilotControlSpeed;
+			pos.x -= multiplier*pilotControlSpeed;
 		}
 		if (CrossPlatformInputManager.GetAxis ("Horizontal") > 0) {
-			pos.x += pilotControlSpeed;
+			pos.x += multiplier*pilotControlSpeed;
 		}
 		if (CrossPlatformInputManager.GetAxis ("Vertical") < 0) {
-			pos.z -= pilotControlSpeed;
+			pos.z -= multiplier*pilotControlSpeed;
 		}
 		if (CrossPlatformInputManager.GetAxis ("Vertical") > 0) {
-			pos.z += pilotControlSpeed;
+			pos.z += multiplier*pilotControlSpeed;
 		}
 		pos.y += CrossPlatformInputManager.GetAxis ("Lift")*0.06f;
 		this.transform.position = pos;
@@ -57,6 +75,9 @@ public class DroneController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		// Update airplane data
+	//	overlays = new List<GameObject>(airTrafficRenderer.aircraftOverlays);
+		distances = new List<float>(airTrafficRenderer.distances);	
 		overriddenControl = collisionDetection ();
 		if (!overriddenControl)
 			pilotControl ();

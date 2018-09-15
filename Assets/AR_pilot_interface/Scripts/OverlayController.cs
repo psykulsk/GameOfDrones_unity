@@ -19,7 +19,11 @@ public class OverlayController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		Vector3 pos = this.transform.position;
+		float distance = (float)System.Math.Sqrt (pos.x * pos.x + pos.z * pos.z);
+		float scale = distance / 6000.0f;
 		this.GetComponent<RectTransform> ().rotation = Quaternion.LookRotation (Camera.main.transform.forward);
+		this.GetComponent<RectTransform> ().localScale = new Vector3 (scale, scale);
 	}
 
 	public void setAircraftData(Aircraft aircraft){

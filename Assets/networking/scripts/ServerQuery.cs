@@ -27,7 +27,7 @@ public static class ServerQuery {
 
 	public static IEnumerator postDronePosition(System.Func<string> callback){
 		string drone_data_json = callback ();	
-		Debug.Log (drone_data_json);
+		//Debug.Log (drone_data_json);
 		byte[] bytes = Encoding.UTF8.GetBytes(drone_data_json);
 		UnityWebRequest www = new UnityWebRequest (droneDataEndpoint, UnityWebRequest.kHttpVerbPOST);
 		UploadHandlerRaw uploadHandler = new UploadHandlerRaw (bytes);
