@@ -7,7 +7,7 @@ using UnityStandardAssets.CrossPlatformInput;
 public class DroneController : MonoBehaviour {
 
 
-	public float pilotControlSpeed = 0.01f;
+	public float pilotControlSpeed = 8.0f;
 
 	public bool overriddenControl;
 
@@ -51,7 +51,7 @@ public class DroneController : MonoBehaviour {
 		if (CrossPlatformInputManager.GetAxis ("Vertical") > 0) {
 			pos.z += pilotControlSpeed;
 		}
-		pos.y += CrossPlatformInputManager.GetAxis ("Lift")*0.1f;
+		pos.y += CrossPlatformInputManager.GetAxis ("Lift")*0.06f;
 		this.transform.position = pos;
 	}
 

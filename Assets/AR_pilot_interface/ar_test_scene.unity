@@ -1383,7 +1383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebaef1f8850903447965b9531c7b505e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pilotControlSpeed: 0.01
+  pilotControlSpeed: 0.2
   overriddenControl: 0
   pilotData: {fileID: 1497660811}
 --- !u!54 &1149342678
