@@ -13,8 +13,8 @@ public class GameStateController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		InvokeRepeating ("updateAirTrafficData", 1.0f, 0.5f);
-		InvokeRepeating ("sendDroneData", 1.0f, 1.0f);
+		InvokeRepeating ("updateAirTrafficData", 0.5f, 0.5f);
+		InvokeRepeating ("sendDroneData", 0.2f, 0.5f);
 	}
 
 	void updateAirTrafficData(){

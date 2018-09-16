@@ -23,6 +23,25 @@ public class DroneController : MonoBehaviour {
 
 	public float criticalDistance = 10000.0f;
 
+	public Vector3 initPos;
+	public Quaternion initRot;
+
+	void Start(){
+		initPos = this.transform.position;
+		initRot = this.transform.rotation;
+	}
+
+	public void droneReset(){
+		if (this.isActiveAndEnabled) {
+			this.gameObject.SetActive (false);
+			collisionText.SetActive (false);
+		} else {
+			this.transform.position = initPos;
+			this.transform.rotation = initRot;
+			this.gameObject.SetActive (true);
+		}
+	}
+
 	bool collisionDetection(List<float> new_distances){
 		foreach (var item in new_distances) {
 			//float dist = System.Math.Abs(Vector3.Distance (item.transform.position, this.GetComponent<RectTransform>().position));
@@ -33,7 +52,7 @@ public class DroneController : MonoBehaviour {
 				return true;
 			}
 		}
-		this.GetComponentInChildren<Image> ().color = Color.blue;
+		this.GetComponentInChildren<Image> ().color = Color.green;
 		collisionText.SetActive (false);
 		return false;
 	}
@@ -42,19 +61,28 @@ public class DroneController : MonoBehaviour {
 
 	}
 
-	public string getDroneJson(){
+	Aircraft getDroneData(){
 		Vector3 drone_position = this.transform.position;
 		Aircraft drone = new Aircraft();
-		drone.alt = (int)drone_position.y;
+		drone.alt = (int)System.Math.Round(drone_position.y + pilotData.altitude);
 		drone.icao = "FFFFFF";
 		drone.lat = pilotData.lantitude + helperFunctions.metersToLatitude (drone_position.x, pilotData.lantitude);
 		drone.lon = pilotData.longtitude + helperFunctions.metersToLongtitude (drone_position.z, pilotData.longtitude);
 		drone.speed = 0.0f;
 		drone.last_update = "2018-09-14T22:42:25.898475+00:00";
-		drone.heading = 0.0f;
-			
+		drone.heading = this.transform.rotation.eulerAngles.y;
+		return drone;
+	}
+
+	public string getDroneJson(){
+		Aircraft drone = getDroneData ();
 		return JsonUtility.ToJson (drone);
 
+	}
+
+	public void updateDroneOverlay(){
+		Aircraft drone = getDroneData ();
+		this.GetComponentInChildren<OverlayController> ().setAircraftData (drone);
 	}
 
 	void pilotControl(){
@@ -71,7 +99,7 @@ public class DroneController : MonoBehaviour {
 			angles.y += multiplier * rotationSpeed;
 		}
 		if (CrossPlatformInputManager.GetAxis ("Vertical") < 0) {
-			//this.transform.position -= this.transform.forward * pilotControlSpeed;
+			this.transform.position -= this.transform.forward * pilotControlSpeed;
 			this.transform.Translate(Vector3.forward * Time.deltaTime*pilotControlSpeed);
 		}
 		if (CrossPlatformInputManager.GetAxis ("Vertical") > 0) {
@@ -89,6 +117,7 @@ public class DroneController : MonoBehaviour {
 	void Update () {
 		// Update airplane data
 	//	overlays = new List<GameObject>(airTrafficRenderer.aircraftOverlays);
+		updateDroneOverlay();
 		distances = new List<float>(airTrafficRenderer.distances);	
 		overriddenControl = collisionDetection (distances);
 		if (!overriddenControl)

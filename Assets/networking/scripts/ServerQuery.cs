@@ -7,7 +7,7 @@ using System.Text;
 
 public static class ServerQuery {
 
-	public static string airTrafficEndpoint = "http://godbackend.scapp.io/mirror_recorded";
+	public static string airTrafficEndpoint = "http://godbackend.scapp.io/full_data";
 	public static string droneDataEndpoint = "http://godbackend.scapp.io/post_drone_position";
 
 	public static IEnumerator getAirTrafficJson(System.Action<string> callback) {

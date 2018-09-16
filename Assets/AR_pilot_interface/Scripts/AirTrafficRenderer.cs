@@ -19,6 +19,8 @@ public class AirTrafficRenderer : MonoBehaviour {
 
 	public GameObject aircraftOverlayPrefab;
 
+	public GameObject dronePrefab;
+
 	public float distanceThreshold = 1000000.0f;
 
 	private void drawAircraftOverlays(){
@@ -36,11 +38,19 @@ public class AirTrafficRenderer : MonoBehaviour {
 
 			if (distance < distanceThreshold) {
 				float scale = distance / 6000.0f;
-				GameObject newOverlay = (GameObject)Instantiate (aircraftOverlayPrefab, this.gameObject.transform); 
-				newOverlay.GetComponent<RectTransform> ().localPosition = new Vector3 (xDiff, heightDiff, zDiff); 
-				newOverlay.GetComponent<RectTransform> ().localScale = new Vector3 (scale, scale);
+				GameObject newOverlay;
+				if (aircraft.icao [0] != 'F') {
+					newOverlay = (GameObject)Instantiate (aircraftOverlayPrefab, this.gameObject.transform);
+				} else if (aircraft.icao != "FFFFFF") {
+					newOverlay = (GameObject)Instantiate (dronePrefab, this.gameObject.transform);
+					scale = scale * 0.001f;
+				} else
+					continue;
+				newOverlay.transform.localPosition = new Vector3 (xDiff, heightDiff, zDiff); 
+				//newOverlay.GetComponentInChildren<RectTransform>().transform.localScale = new Vector3 (scale, scale);
+
 				aircraftOverlays.Add (newOverlay);
-				newOverlay.GetComponent<OverlayController> ().setAircraftData (aircraft);
+				newOverlay.GetComponentInChildren<OverlayController>().setAircraftData (aircraft);
 				filteredAircrafts.Add (aircraft);
 				distances.Add (distance);
 			}
